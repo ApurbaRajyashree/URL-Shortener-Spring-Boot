@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: url-shortener-sb
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/urlshortenerdb
+    username: admin
+    password: admin
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        hbm2ddl:
+          auto: update
+    show-sql: true
