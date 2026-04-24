@@ -1,4 +1,4 @@
-package com.url.shortener.service;
+package com.url.shortener.security.service;
 
 import com.url.shortener.model.User;
 import com.url.shortener.repo.UserRepository;
