@@ -13,3 +13,7 @@ spring:
         hbm2ddl:
           auto: update
     show-sql: true
+
+jwt:
+  secret: a7886c7bc1f87016b0a007bd0a0529a5a682655f6d5521e1da8f986aa09ac311
+  expiration: 172800000
