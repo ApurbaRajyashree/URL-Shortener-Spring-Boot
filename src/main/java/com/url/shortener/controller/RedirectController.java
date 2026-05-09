@@ -22,6 +22,7 @@ public class RedirectController {
         Optional<UrlMapping> urlMappingOptional = urlMappingService.getOriginalUrl(shortUrl);
         if (urlMappingOptional.isPresent()) {
             UrlMapping urlMapping = urlMappingOptional.get();
+            urlMappingService.recordClickEvent(urlMapping);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("Location", urlMapping.getOriginalUrl());
             return ResponseEntity.status(302).headers(httpHeaders).build();

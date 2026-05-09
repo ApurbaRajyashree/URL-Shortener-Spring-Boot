@@ -20,4 +20,6 @@ public interface UrlMappingService {
     Map<LocalDate, Long> getTotalClicksByUserAndDate(User user, String startDate, String endDate);
 
     Optional<UrlMapping> getOriginalUrl(String shortUrl);
+
+    void recordClickEvent(UrlMapping urlMapping);
 }

@@ -68,6 +68,15 @@ public class UrlMappingServiceImpl implements UrlMappingService {
         return urlMappingRepo.findByShortUrl(shortUrl);
     }
 
+    @Override
+    @Transactional
+    public void recordClickEvent(UrlMapping urlMapping) {
+        urlMapping.setClickCount(urlMapping.getClickCount() + 1);
+        urlMappingRepo.save(urlMapping);
+        //record click event
+        clickEventService.save(urlMapping);
+    }
+
     private String generateShortUrl() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();

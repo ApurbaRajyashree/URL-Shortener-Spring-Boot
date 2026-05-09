@@ -4,6 +4,7 @@ import com.url.shortener.dto.ClickEventDto;
 import com.url.shortener.model.ClickEvent;
 import com.url.shortener.model.UrlMapping;
 import com.url.shortener.repo.ClickEventRepo;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,14 @@ public class ClickEventServiceImpl implements ClickEventService {
     public Map<LocalDate, Long> getTotalClicksByUserAndDate(List<UrlMapping> urlMappings, LocalDate start, LocalDate end) {
         List<ClickEvent> clickEventList = clickEventRepo.findAllByUrlMappingInAndClickDateBetween(urlMappings, start.atStartOfDay(), end.plusDays(1).atStartOfDay());
         return clickEventList.stream().collect(Collectors.groupingBy(click -> click.getClickDate().toLocalDate(), Collectors.counting()));
+    }
+
+    @Override
+    @Transactional
+    public void save(UrlMapping urlMapping) {
+        ClickEvent clickEvent = new ClickEvent();
+        clickEvent.setClickDate(LocalDateTime.now());
+        clickEvent.setUrlMapping(urlMapping);
+        clickEventRepo.save(clickEvent);
     }
 }

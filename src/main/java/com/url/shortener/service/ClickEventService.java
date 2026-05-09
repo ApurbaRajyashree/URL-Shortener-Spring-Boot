@@ -12,4 +12,6 @@ public interface ClickEventService {
     List<ClickEventDto> getClickEventsByDate(UrlMapping urlMapping, LocalDateTime startDate, LocalDateTime endDate);
 
     Map<LocalDate, Long> getTotalClicksByUserAndDate(List<UrlMapping> urlMappings, LocalDate start, LocalDate end);
+
+    void save(UrlMapping urlMapping);
 }
