@@ -1,5 +1,6 @@
 package com.url.shortener.controller;
 
+import com.url.shortener.dto.ClickEventDto;
 import com.url.shortener.dto.UrlMappingDto;
 import com.url.shortener.model.User;
 import com.url.shortener.service.UrlMappingService;
@@ -10,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -35,5 +38,22 @@ public class UrlMappingController {
     public ResponseEntity<List<UrlMappingDto>> getUserUrls(Principal principal) {
         User user = userService.findByUsername(principal.getName());
         return ResponseEntity.ok(urlMappingService.getUrlsByUser(user));
+    }
+
+    @GetMapping("/analytics/{shortUrl}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<ClickEventDto>> getUrlAnalytics(@PathVariable String shortUrl,
+                                                               @RequestParam("startDate") String startDate,
+                                                               @RequestParam("endDate") String endDate) {
+        return ResponseEntity.ok(urlMappingService.getClickEventsByDate(shortUrl, startDate, endDate));
+    }
+
+    @GetMapping("/totalClicks")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Map<LocalDate, Long>> getTotalClicksByDate(Principal principal,
+                                                                     @RequestParam("startDate") String startDate,
+                                                                     @RequestParam("endDate") String endDate) {
+        User user = userService.findByUsername(principal.getName());
+        return ResponseEntity.ok(urlMappingService.getTotalClicksByUserAndDate(user, startDate, endDate));
     }
 }

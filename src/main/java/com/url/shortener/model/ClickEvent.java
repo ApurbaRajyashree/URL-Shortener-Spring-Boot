@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClickEvent extends BaseEntity {
+public class ClickEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "url_mapping_id")
+    @JoinColumn(name = "url_mapping_id", foreignKey = @ForeignKey(name = "fk_clickEvent_urlMapping"))
     private UrlMapping urlMapping;
 
     private LocalDateTime clickDate;

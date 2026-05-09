@@ -18,7 +18,7 @@ public class UrlMapping extends BaseEntity {
     private Long id;
     private String originalUrl;
     private String shortUrl;
-    private int clickCount = 0;
+    private Integer clickCount = 0;
 
     @ManyToOne
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "id"))
