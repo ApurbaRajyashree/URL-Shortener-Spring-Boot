@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -60,6 +61,11 @@ public class UrlMappingServiceImpl implements UrlMappingService {
         LocalDate end = LocalDate.parse(endDate, formatter);
         List<UrlMapping> urlMappings = urlMappingRepo.findAllByUserId(user.getId());
         return clickEventService.getTotalClicksByUserAndDate(urlMappings, start, end);
+    }
+
+    @Override
+    public Optional<UrlMapping> getOriginalUrl(String shortUrl) {
+        return urlMappingRepo.findByShortUrl(shortUrl);
     }
 
     private String generateShortUrl() {
